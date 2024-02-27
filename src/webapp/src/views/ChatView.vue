@@ -35,11 +35,11 @@ let sendMessage;
 
     // 收到消息
     ws.onmessage = (event) => {
-        const transMessage = JSON.parse(event.data);
-        if(transMessage.type == -1) {
-            alert(transMessage.content);
-        } else if(transMessage.type == 0) {
-            messages.value.push(transMessage.content);
+        const reply = JSON.parse(event.data);
+        if(reply.type == -1) {
+            alert(reply.content);
+        } else if(reply.type == 0) {
+            messages.value.push(reply.content);
         }
     }
 
@@ -75,7 +75,7 @@ let sendMessage;
 <template>
     <main class="m-lg-5">
         <div id="messages">
-            <div class="mb-1" v-for="message in messages" :key="message.id" :class="isMe(message)">
+            <div class="mb-2" v-for="message in messages" :key="message.id" :class="isMe(message)">
                 <span id="userIcon" :style="{'background-color': message.color}"></span>
                 <span class="message d-inline-block">
                     <span class="small"> {{ message.userid }}:{{ message.username }}</span>
@@ -143,5 +143,6 @@ main {
     padding: 8px;
     margin-right: 10px;
     background-color: rgb(255, 255, 255, 1);
+    min-width: 15%;
 }
 </style>

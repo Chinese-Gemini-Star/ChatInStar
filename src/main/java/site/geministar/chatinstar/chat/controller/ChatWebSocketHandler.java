@@ -5,22 +5,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 import site.geministar.chatinstar.chat.model.Message;
-import site.geministar.chatinstar.chat.model.TransMessage;
+import site.geministar.chatinstar.chat.model.Reply;
 import site.geministar.chatinstar.until.HttpUtil;
 import site.geministar.chatinstar.until.jwt.JWTUtil;
 import site.geministar.chatinstar.until.mapper.MessageMapper;
 import toolgood.words.StringSearch;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Slf4j
@@ -63,7 +60,7 @@ public class ChatWebSocketHandler implements WebSocketHandler {
         // 发送欢迎消息
         Message message = new Message(null,"root","聊天室管理员","#66CCFF", LocalDateTime.now().toString(),"欢迎用户%s:%s进入聊天室".formatted(id,username));
         messageMapper.insert(message);
-        sendMessageToAll(new TransMessage<Message>(0,message));
+        sendMessageToAll(new Reply<>(0, message));
         log.info("用户{}:{}进入聊天室",id,username);
     }
 
@@ -80,7 +77,7 @@ public class ChatWebSocketHandler implements WebSocketHandler {
             // 异常消息
             case -1 -> {
                 log.error("异常消息:{}",msg.getPayload());
-                session.sendMessage(new TextMessage(objectMapper.writeValueAsString(new TransMessage<>(-1, "异常消息"))));
+                session.sendMessage(new TextMessage(objectMapper.writeValueAsString(new Reply<>(-1, "异常消息"))));
             }
             // 用户聊天消息
             case 0 -> {
@@ -89,12 +86,12 @@ public class ChatWebSocketHandler implements WebSocketHandler {
                 // 检测消息中是否存在敏感词
                 if(search.ContainsAny(message.getContent())) {
                     log.info("消息{}包含敏感词",msg.getPayload());
-                    session.sendMessage(new TextMessage(objectMapper.writeValueAsString(new TransMessage<>(-1, "消息包含敏感词"))));
+                    session.sendMessage(new TextMessage(objectMapper.writeValueAsString(new Reply<>(-1, "消息包含敏感词"))));
                 } else {
                     // 保存消息
                     messageMapper.insert(message);
                     // 发送消息给所有用户
-                    sendMessageToAll(new TransMessage<>(0,message));
+                    sendMessageToAll(new Reply<>(0,message));
                 }
             }
         }
@@ -128,7 +125,7 @@ public class ChatWebSocketHandler implements WebSocketHandler {
      * 发送消息给所有客户端
      * @param msg
      */
-    private void sendMessageToAll(@NonNull TransMessage<?> msg) {
+    private void sendMessageToAll(@NonNull Reply<?> msg) {
         sessions.forEach((id,s) -> {
             try{
                 s.sendMessage(new TextMessage(objectMapper.writeValueAsString(msg)));

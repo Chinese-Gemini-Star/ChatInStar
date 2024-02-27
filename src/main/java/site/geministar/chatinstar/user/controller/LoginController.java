@@ -50,6 +50,10 @@ public class LoginController {
             log.info("用户名{}中包含敏感词：{}", usr.getName(),search.FindAll(usr.getName()));
             return new Reply(0,"用户名中存在敏感词");
         }
+        if(!usr.getColor().matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$")) {
+            log.info("图标颜色不合法：{}",usr.getColor());
+            return new Reply(0,"图标颜色不合法，请使用#开头的6位或8位十六进制表示法的RGB代码");
+        }
 
         // 检查用户ID是否已存在
         if(mapper.selectById(usr.getId()) != null) {
@@ -81,6 +85,7 @@ public class LoginController {
                 Map<String,String> map = new HashMap<>();
                 map.put("name",userFound.getName());
                 map.put("id",userFound.getId());
+                map.put("color",userFound.getColor());
                 return new Reply(1, JWTUtil.create(map));
             } else {
                 return new Reply(0,"用户ID或密码错误");

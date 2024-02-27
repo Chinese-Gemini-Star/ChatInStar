@@ -33,4 +33,10 @@ public class Usr {
      */
     @NotNull
     private String name;
+
+    /**
+     * 图标颜色
+     */
+    @NotNull
+    private String color;
 }

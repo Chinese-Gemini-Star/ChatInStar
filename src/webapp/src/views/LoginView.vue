@@ -19,6 +19,7 @@ function login(e) {
                 // 登录成功
                 store.jwt = response.data.message; // 保存token
                 user.name = jwtDecode(store.jwt).name; // 保存用户名
+                user.color = jwtDecode(store.jwt).color; // 保存图标颜色
                 router.push("/");
             } else {
                 // 登录失败
