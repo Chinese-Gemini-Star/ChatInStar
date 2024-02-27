@@ -30,7 +30,7 @@ public class LoginControllerTest {
         // 正常用户
         client.post().uri("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(new Usr("114514", "12345678", "1")), Usr.class)
+                .body(Mono.just(new Usr("114514", "12345678", "1","#7777ff")), Usr.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Reply.class).isEqualTo(new Reply(1, "注册成功"));
@@ -46,7 +46,7 @@ public class LoginControllerTest {
         // 用户ID异常用户
         client.post().uri("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(new Usr("你好", "12345678", "1")), Usr.class)
+                .body(Mono.just(new Usr("你好", "12345678", "1","#7777ff")), Usr.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Reply.class).isEqualTo(new Reply(0, "用户ID只能包含字母、数字和下划线"));
@@ -60,7 +60,7 @@ public class LoginControllerTest {
         // 用户密码异常用户
         client.post().uri("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(new Usr("1", "1", "1")), Usr.class)
+                .body(Mono.just(new Usr("1", "1", "1","#7777ff")), Usr.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Reply.class).isEqualTo(new Reply(0, "密码只能包含字母、数字和下划线，且长度不能小于8，不能超过16"));
@@ -74,7 +74,7 @@ public class LoginControllerTest {
         // 用户名异常用户
         client.post().uri("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(new Usr("1","12345678","TMD")), Usr.class)
+                .body(Mono.just(new Usr("1","12345678","TMD","#7777ff")), Usr.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Reply.class).isEqualTo(new Reply(0,"用户名中存在敏感词"));
@@ -88,7 +88,7 @@ public class LoginControllerTest {
         // 重复用户
         client.post().uri("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(new Usr("admin", "12345678", "1")), Usr.class)
+                .body(Mono.just(new Usr("admin", "12345678", "1","#7777ff")), Usr.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Reply.class).isEqualTo(new Reply(0, "用户ID已存在"));
@@ -102,7 +102,7 @@ public class LoginControllerTest {
         // 正常用户
         client.post().uri("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(new Usr("admin", "Dl2004061605","")), Usr.class)
+                .body(Mono.just(new Usr("admin", "Dl2004061605","","")), Usr.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Reply.class).isEqualTo(new Reply(1, "星双子"));
@@ -116,7 +116,7 @@ public class LoginControllerTest {
         // 错误密码
         client.post().uri("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(new Usr("admin", "Dl20040616","")), Usr.class)
+                .body(Mono.just(new Usr("admin", "Dl20040616","","")), Usr.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Reply.class).isEqualTo(new Reply(0, "用户ID或密码错误"));
@@ -130,7 +130,7 @@ public class LoginControllerTest {
         // 错误密码
         client.post().uri("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(new Usr("114514", "1","")), Usr.class)
+                .body(Mono.just(new Usr("114514", "1","","")), Usr.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Reply.class).isEqualTo(new Reply(0, "用户ID或密码错误"));

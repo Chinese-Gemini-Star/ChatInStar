@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class TransMessage<T> {
+public class Reply<T> {
     /**
      * 消息类型
      */

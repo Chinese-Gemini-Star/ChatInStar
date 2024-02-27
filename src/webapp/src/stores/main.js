@@ -7,7 +7,7 @@ export const useMainStore = defineStore('main', () => {
         id: "",
         password: "",
         name: "",
-        color: "#7777ff"
+        color: ""
     })
 
     const jwt = ref("")

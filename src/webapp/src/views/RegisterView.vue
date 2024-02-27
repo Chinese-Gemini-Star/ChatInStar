@@ -7,7 +7,8 @@ import { useRouter } from 'vue-router';
 const user = reactive({
     id: "",
     password: "",
-    name: ""
+    name: "",
+    color:"#000000"
 })
 
 const password2 = ref("")
@@ -66,15 +67,22 @@ function register(e) {
                     <input required type="password" v-model="password2" id="password2" name="password2" class="form-control">
                 </div>
             </div>
-
             <div class="mb-3 row">
                 <div class="col-3 text-nowrap">
+                    <lable for="color">图标颜色：</lable>
+                </div>
+                <div class="col-1">
+                    <input required type="color" v-model="user.color" id="color" name="color" class="form-control form-control-color">
+                </div>
+
+                <div class="col-2 text-nowrap">
                     <label for="name" class="form-label text-nowrap">昵称:</label>
                 </div>
-                <div class="col-8">
+                <div class="col-5">
                     <input required type="text" v-model="user.name" id="name" name="name" class="form-control">
                 </div>
             </div>
+            
             <div class="text-center mt-5">
                 <button type="submit" class="btn btn-primary text-nowrap" style="width: 90%;">注册</button>
             </div>
