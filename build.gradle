@@ -1,0 +1,47 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.1'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id 'io.freefair.lombok' version '6.3.0'
+	id 'nebula.lint'version '17.7.0'
+}
+
+group = 'site.geministar'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'io.github.toolgood:toolgood-words:3.0.3.1'
+	implementation 'com.tangzc:mybatis-plus-ext-boot-starter:3.5.5-EXT550-boot3'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'com.auth0:java-jwt:4.4.0'
+	implementation 'org.mindrot:jbcrypt:0.4'
+	implementation 'com.google.guava:guava:33.0.0-jre'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// 仅用于提供测试时使用的WebTestClient
+	testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+	testImplementation 'org.springframework.security:spring-security-test'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+//	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'org.springframework.boot:spring-boot-docker-compose'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.withType(Jar).configureEach {
+	destinationDirectory = file("$rootDir")
+}

@@ -1,0 +1,28 @@
+version: "3"
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=NGtXwi77ixz7sxKr
+      - POSTGRES_DB=root
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+#  web:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - postgres
+#    ports:
+#      - "8080:8080"

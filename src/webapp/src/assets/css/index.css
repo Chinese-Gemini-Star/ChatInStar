@@ -1,0 +1,18 @@
+.fullScreen {
+    height: 100%;
+}
+
+body {
+    background-image: url('/src/assets/img/bg.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#app > main {
+    margin: 0 6vmin;
+    border: 1px;
+    border-radius: 25px;
+    background-color: rgb(255, 255, 255, 0.9);
+    padding: 8vmax 3vmax;
+}

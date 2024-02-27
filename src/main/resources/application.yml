@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/root
+    username: root
+    password: NGtXwi77ixz7sxKr
+
+string:
+  search:
+    keyWordPath: sensi_words.txt
