@@ -6,6 +6,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
+import 'font-awesome/css/font-awesome.min.css'
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)

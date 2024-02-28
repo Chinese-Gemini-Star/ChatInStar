@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import ChatView from '@/views/ChatView.vue'
 import { useMainStore } from '@/stores/main'
 
 const router = createRouter({
@@ -9,7 +8,7 @@ const router = createRouter({
     // 主页(聊天室)
     {
       path: '/',
-      component: ChatView,
+      component: () => import("@/views/ChatView.vue"),
       meta: {
         requiresLogin: true
       }
