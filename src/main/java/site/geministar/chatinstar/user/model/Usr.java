@@ -1,5 +1,6 @@
 package site.geministar.chatinstar.user.model;
 
+import com.tangzc.mpe.autotable.annotation.Ignore;
 import com.tangzc.mpe.autotable.annotation.NotNull;
 import com.tangzc.mpe.autotable.annotation.Table;
 import lombok.AllArgsConstructor;
@@ -39,4 +40,17 @@ public class Usr {
      */
     @NotNull
     private String color;
+
+    /**
+     * 身份认证
+     */
+    @Ignore
+    private String token;
+
+    public Usr(String id, String password, String name, String color) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.color = color;
+    }
 }

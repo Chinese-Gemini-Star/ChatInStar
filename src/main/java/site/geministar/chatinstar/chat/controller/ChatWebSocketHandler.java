@@ -49,13 +49,15 @@ public class ChatWebSocketHandler implements WebSocketHandler {
         String username = JWTUtil.read(token).get("name").asString();
 
         // 验证重复登录
-        if (sessions.containsKey(id)) {
+        if (sessions.get(id) == null) {
+            sessions.put(id,session); // 保存会话
+        } else if(sessions.get(id) != session) { // 非当前端重复登录
             // 关闭旧连接
             WebSocketSession old = sessions.get(id);
+            log.info("用户{}重复登录，关闭旧连接", id);
             old.close(new CloseStatus(3005, "此账号在其他设备登录，您已被迫下线"));
             sessions.remove(id);
         }
-        sessions.put(id,session); // 保存会话
 
         // 发送欢迎消息
         Message message = new Message(null,"root","聊天室管理员","#66CCFF", LocalDateTime.now().toString(),"欢迎用户%s:%s进入聊天室".formatted(id,username));
@@ -99,7 +101,7 @@ public class ChatWebSocketHandler implements WebSocketHandler {
 
     @Override
     public void handleTransportError(@NonNull WebSocketSession session, @NonNull Throwable exception) throws Exception {
-
+        session.close();
     }
 
     /**
