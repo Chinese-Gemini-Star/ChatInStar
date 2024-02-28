@@ -12,7 +12,7 @@ public class Reply {
      */
     private int  status;
     /**
-     * 错误信息
+     * 信息
      */
     private String message;
 }

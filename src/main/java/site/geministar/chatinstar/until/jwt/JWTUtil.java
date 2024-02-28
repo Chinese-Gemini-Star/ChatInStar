@@ -24,12 +24,12 @@ public class JWTUtil {
      * @param map 参数
      * @return jwt token
      */
-    public static String create(@NonNull Map<String,String> map){
+    public static String create(@NonNull Map<String,String> map) {
         JWTCreator.Builder jwt = JWT.create();
 
         // 设置过期事件
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE,1);//过期时间为1分钟
+        calendar.add(Calendar.MINUTE, 1);//过期时间为1分钟
         jwt.withExpiresAt(calendar.getTime());
 
         // 绑定参数
